@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/rtnpro/henge/pkg/loaders/compose"
+	"github.com/rtnpro/henge/pkg/loaders"
 	"github.com/rtnpro/henge/pkg/transformers"
 )
 
@@ -13,12 +13,12 @@ func main() {
 
 	flag.Parse()
 
-	project, err = compose.Load(flag.Args()[0:]...)
+	project, bases, err := loaders.Compose(flag.Args()[0:]...)
 
 	if err != nil {
 		fmt.Println("Error: ", err)
 		return
 	}
 
-	transformers.Transform(provider, project)
+	transformers.Transform(*provider, *project, bases)
 }
